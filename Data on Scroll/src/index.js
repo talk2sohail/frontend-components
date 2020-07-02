@@ -36,11 +36,17 @@ function App() {
             <h1>demo: react-infinite-scroll-component</h1>
             <hr />
             <InfiniteScroll
+                //this number is important fot next data
                 dataLength={items.length}
+                // it wiil be function that get called for more data
                 next={fetchMoreData}
+                //boolean to make sure that there is data to fetch
                 hasMore={hasMoreData ? true : false}
+                //this is the  value to ensure when api is to be called
                 scrollThreshold={0.9}
+                //compoent for the loader
                 loader={<Spinner />}
+                //component to render when there is no data left to show
                 endMessage={
                     <p style={{ textAlign: 'center', fontSize: 90 }}>
                         <b>Yay! You have seen it all</b>
