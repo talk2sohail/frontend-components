@@ -1,20 +1,52 @@
-import { motion } from "framer-motion";
-import React, { Fragment } from "react";
-import ReactDOM from "react-dom";
+import React, { useState } from 'react'
+import ReactDOM from 'react-dom'
 
-function MyApp({ name }) {
-	return (
-		<motion.h1
-			animate={{ fontSize: "40px", color: "#ff2994", x: -10, y: 30 }}
-			style={{ fontFamily: "monospace" }}
-		>
-			Hello {name}! Long time!.
-		</motion.h1>
-	);
+// import Spinner from './Spinner'
+
+import Scroll from './Scroll'
+const style = {
+    height: 30,
+    border: "1px solid green",
+    margin: 6,
+    padding: 8
+};
+
+export const MyApp = () => {
+    const [data, setdata] = useState(Array.from({ length: 10 }));
+    const [hasMoreData, setHasMoreData] = useState(true)
+
+
+    const fetchMoreData = () => {
+
+        if (data.length === 100) {
+            //this will update state of MyApp
+            setHasMoreData(hasMoreData => !hasMoreData)
+            return;
+        }
+        setTimeout(() => {
+            console.log('updating data')
+            setdata(data => data.concat(Array.from({ length: 10 })));
+        }, 1500);
+    };
+
+    return (
+        <div style={{ width: 600, height: "100vh", margin: "0 auto" }}>
+            <h1>Hello Developer</h1>
+            <Scroll
+                name="sohail"
+                next={fetchMoreData}
+                dataLength="20"
+                hasMore={hasMoreData ? true : false}
+            >
+                {data.map((i, index) => (
+                    <div style={style} key={index}>
+                        div - #{index}
+                    </div>
+                ))}
+            </Scroll>
+        </div>
+    )
 }
 
-function Container() {
-	return <MyApp name="sohail" />;
-}
 
-ReactDOM.render(<Container />, document.getElementById("app"));
+ReactDOM.render(<MyApp />, document.getElementById("app"))
